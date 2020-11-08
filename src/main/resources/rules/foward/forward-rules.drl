@@ -1,0 +1,258 @@
+package forwardRules
+
+//list any import classes here.
+import model.ContenidoAutomatico;
+import model.PaginaWeb;
+import model.Accesibilidad;
+import model.NivelDeIntensidad;
+import model.Configurable;
+import model.Cumplimiento;
+import model.Localizacion;
+import model.DiagnosticoDeAccesibilidadOperativa;
+
+
+//declare any global variables here
+
+rule "R01 Diagnostico Contenido Automatico Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			contenidoAutomatico.duracion > 5,
+        	contenidoAutomatico.controlesDePausaODetencion == true
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoContenidoAutomatico(Accesibilidad.accesible)
+    	}
+end
+
+rule "R02 Diagnostico Contenido Automatico Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			contenidoAutomatico.duracion < 5
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoContenidoAutomatico(Accesibilidad.accesible)
+    	}
+end
+
+rule "R03 Diagnostico Contenido Automatico NO Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			contenidoAutomatico.duracion > 5,
+			contenidoAutomatico.controlesDePausaODetencion == false
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoContenidoAutomatico(Accesibilidad.noAccesible)
+    	}
+end
+
+rule "R04 Diagnostico Contenido Con Flashes Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			contenidoConFlashes.cantidadDeFlashes < 3
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoContenidoConFlashes(Accesibilidad.accesible)
+    	}
+end
+
+rule "R05 Diagnostico Contenido Con Flashes Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			contenidoConFlashes.cantidadDeFlashes > 3,
+			contenidoConFlashes.nivelDeIntensidad.isa(NivelDeIntensidad.porDebajoDeLosLimites)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoContenidoConFlashes(Accesibilidad.accesible)
+    	}
+end
+
+rule "R06 Diagnostico Contenido Con Flashes NO Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			contenidoConFlashes.cantidadDeFlashes > 3,
+			contenidoConFlashes.nivelDeIntensidad.isa(NivelDeIntensidad.porEncimaDeLosLimites)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoContenidoConFlashes(Accesibilidad.noAccesible)
+    	}
+end
+
+rule "R07 Diagnostico Eventos por tiempo Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			eventosPorTiempo.botonApagado == true,
+			eventosPorTiempo.configurable.isa(Configurable.permite)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoEventosPorTiempo(Accesibilidad.accesible)
+    	}
+end
+
+rule "R08 Diagnostico Eventos por tiempo Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			eventosPorTiempo.botonApagado == false,
+			eventosPorTiempo.configurable.isa(Configurable.permite)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoEventosPorTiempo(Accesibilidad.accesible)
+    	}
+end
+
+rule "R09 Diagnostico Eventos por tiempo Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			eventosPorTiempo.botonApagado == true,
+			eventosPorTiempo.configurable.isa(Configurable.noPermite)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoEventosPorTiempo(Accesibilidad.accesible)
+    	}
+end
+
+rule "R10 Diagnostico Eventos por tiempo NO Accesible"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			eventosPorTiempo.botonApagado == false,
+			eventosPorTiempo.configurable.isa(Configurable.noPermite)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoEventosPorTiempo(Accesibilidad.noAccesible)
+    	}
+end
+
+rule "R11 Cumple pautas nivel A"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			soporteDeTeclado.coberturaDeNavegacion >= 0 && soporteDeTeclado.coberturaDeNavegacion <=100,
+			soporteDeTeclado.shortcuts == true,
+			soporteDeTeclado.mecanismoAntiTrampa == true,		
+			//diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoAutomatico.isa(Accesibilidad.accesible),
+			//diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoConFlashes.isa(Accesibilidad.accesible),
+			//diagnosticoDeAccesibilidadOperativa.diagnosticoEventosPorTiempo.isa(Accesibilidad.accesible),
+			modalidadDeEntrada.unicoPuntero == true,
+			navegacion.titulos == true,
+			navegacion.botonesEnlaces == true,
+			navegacion.etiquetasDescriptivas == true
+        )
+    then
+    	modify($paginaWeb) {
+    		setCumplimientoPautasNivelA(Cumplimiento.cumple)
+    	}
+    
+end
+
+rule "R12 Cumple pautas nivel AA"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			navegacion.indicadorDeFoco == true,
+			navegacion.localizacion.isa(Localizacion.siteMap) || 
+				navegacion.localizacion.isa(Localizacion.breadcrumb) || 
+				navegacion.localizacion.isa(Localizacion.navBar)
+        )
+    then
+    	modify($paginaWeb) {
+    		setCumplimientoPautasNivelAA(Cumplimiento.cumple)
+    	}
+end
+
+rule "R13 Cumple pautas nivel AAA"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			soporteDeTeclado.coberturaDeNavegacion == 100,
+			sesion.mecanismoDeReAutenticacion == true,
+			sesion.alertasPorInactividad == true,
+			ContenidoConFlashes.cantidadDeFlashes == 0,
+			contenidoAutomatico.movimientoEfecto == true,
+			interrupciones.controlDePausado == true,
+			sesion.mecanismoSinPerdidaDeInformacion == true,
+			modalidadDeEntrada.tamañoEnPx >= 55
+        )
+    then
+    	modify($paginaWeb) {
+    		setCumplimientoPautasNivelAAA(Cumplimiento.cumple)
+    	}
+end
+
+rule "R14 Diagnostico final accesibilidad operativa A"
+	salience 30
+    when
+    $paginaWeb: PaginaWeb(
+		diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.cumple),
+		diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.noCumple),
+		diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.noCumple)
+		)
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoFinal("A")
+    	}
+end
+
+rule "R15 Diagnostico final accesibilidad operativa AA"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.cumple),
+			diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.cumple),
+			diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.noCumple)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoFinal("AA")
+    	}
+end
+
+rule "R16 Diagnostico final accesibilidad operativa AAA"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.cumple),
+			diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.cumple),
+			diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.cumple)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoFinal("AAA")
+    	}
+end
+
+
+rule "R17 Diagnostico final accesibilidad operativa No Cumple"
+
+    when
+    	$paginaWeb: PaginaWeb(
+			diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.noCumple),
+			diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.noCumple),
+			diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.noCumple)
+        )
+    then
+    	modify($paginaWeb) {
+    		setDiagnosticoFinal("NO CUMPLE")
+    	}
+end
+
+
+
