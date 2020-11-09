@@ -51,8 +51,6 @@ public class ForwardTestCases {
 
 	private void prepareKnowledgeSession() {
 		sessionStatefull = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, K_SESSION_NAME);
-		// OutputDisplay outputDisplay = new OutputDisplay();
-		//sessionStatefull.addEventListener(buildEventListener());
 	}
 	
 	@Before
@@ -71,7 +69,7 @@ public class ForwardTestCases {
 	
 	@Test
 	public void accesibilidadOperativaAAATest() {
-		print("Caso de prueba: Nivel de accesibilidad en sitio AAA");
+		print("Caso de prueba 1: Nivel de accesibilidad en sitio AAA");
 		
 		SoporteDeTeclado soporteDeTeclado = new SoporteDeTeclado(true,true,100);
 		EventosPorTiempo eventosPorTiempo = new EventosPorTiempo(false, Configurable.permite);
@@ -96,177 +94,101 @@ public class ForwardTestCases {
 		assertResults(diagnostico, "AAA");
 	}
 
-//	@Test
-//	public void cargarBateriaTest() {
-//		
-//		print("Caso de prueba: Cargar Bateria");
-//		
-//		Motor motor = new Motor();
-//		motor.setArranque(Arranque.NoGira);
-//
-//		Bateria bateria = new Bateria();
-//		bateria.setTieneCarga(false);
-//
-//		TanqueCombustible tanque = new TanqueCombustible();
-//		tanque.setTieneCombustible(true);
-//		
-//		Automovil automovil = new Automovil(motor, bateria, tanque);
-//		
-//		print(automovil);
-//		sessionStatefull.insert(automovil);
-//		sessionStatefull.fireAllRules();
-//
-//		Diagnostico diagnostico = automovil.getDiagnostico();
-//		
-//		String valorEsperado = DiagnosticoPreliminar.CargarBateria.toString();
-//		assertResults(diagnostico, valorEsperado);
-//	}
-//
-//	@Test
-//	public void necesitaCombustibleTest() {
-//	
-//		print("Caso de prueba: Necesita Combustible");
-//		
-//		Motor motor = new Motor();
-//		motor.setArranque(Arranque.Gira);
-//
-//		TanqueCombustible tanque = new TanqueCombustible();
-//		tanque.setTieneCombustible(false);
-//
-//		Bateria bateria = new Bateria();
-//		bateria.setTieneCarga(true);
-//		
-//		Automovil automovil = new Automovil(motor, bateria, tanque);
-//		
-//		print(automovil);
-//		
-//		sessionStatefull.insert(automovil);
-//		sessionStatefull.fireAllRules();
-//		
-//		Diagnostico diagnostico = automovil.getDiagnostico();
-//		
-//		String valorEsperado = DiagnosticoPreliminar.CargarCombustible.toString();
-//		
-//		assertResults(diagnostico, valorEsperado);
-//	}
-//
-//	
-//	  @Test public void limpiarTuberiasCombustibleTest() { 
-//		  
-//		  	print("Caso de prueba: Limpiar Tuberias de combustible");
-//
-//			Motor motor = new Motor();
-//			motor.setArranque(Arranque.Gira);
-//			motor.setFuerzaMotor(FuerzaMotor.Debil);
-//			
-//			Bateria bateria = new Bateria();
-//			bateria.setTieneCarga(true);
-//			
-//			TanqueCombustible tanque = new TanqueCombustible();
-//			tanque.setTieneCombustible(true);
-//
-//			Automovil automovil = new Automovil(motor, bateria, tanque);
-//
-//			print(automovil);
-//			
-//			sessionStatefull.insert(automovil);
-//			sessionStatefull.fireAllRules();
-//			
-//			Diagnostico diagnostico = automovil.getDiagnostico();
-//			
-//			String valorEsperado = DiagnosticoMotor.LimpiarTuberiasCombustible.toString();
-//			assertResults(diagnostico, valorEsperado);
-//		}
-//	 
-//
-//	@Test
-//	public void ajustarPuntosDeInjeccionTest() {
-//	
-//		print("Caso de prueba: Cargar Ajustar Puntos de Injeccion");
-//
-//		Motor motor = new Motor();
-//		motor.setArranque(Arranque.Gira);
-//		motor.setPresentaExplosiones(true);
-//	
-//		Bateria bateria = new Bateria();
-//		bateria.setTieneCarga(true);
-//
-//		TanqueCombustible tanque = new TanqueCombustible();
-//		tanque.setTieneCombustible(true);
-//
-//		Automovil automovil = new Automovil(motor,bateria,tanque);
-//
-//		print(automovil);
-//		
-//		sessionStatefull.insert(automovil);
-//		sessionStatefull.fireAllRules();
-//		
-//		Diagnostico diagnostico = automovil.getDiagnostico();
-//		
-//		String valorEsperado = DiagnosticoMotor.AjustarPuntosDeInyeccion.toString();
-//		assertResults(diagnostico, valorEsperado);
-//	}
-//
-//	@Test
-//	public void ajustarTimingMotorTest() {
-//		
-//		print("Caso de prueba: Ajustar Timing del Motor");
-//
-//		Motor motor = new Motor();
-//		motor.setArranque(Arranque.Gira);
-//		motor.setPresentaGolpes(true);
-//
-//		Bateria bateria = new Bateria();
-//		bateria.setTieneCarga(true);
-//
-//		TanqueCombustible tanque = new TanqueCombustible();
-//		tanque.setTieneCombustible(true);
-//
-//		Automovil automovil = new Automovil(motor,bateria,tanque);
-//
-//		print(automovil);
-//		
-//		sessionStatefull.insert(automovil);
-//		sessionStatefull.fireAllRules();
-//		
-//		Diagnostico diagnostico = automovil.getDiagnostico();
-//		
-//		String valorEsperado = DiagnosticoMotor.AjustarTimingMotor.toString();
-//		
-//		assertResults(diagnostico, valorEsperado);
-//	}
-//
-//	@Test
-//	public void consultarExpertosTest() {
-//		
-//		print("Caso de prueba: Consultar Experto");
-//
-//		Motor motor = new Motor();
-//		motor.setArranque(Arranque.Gira);
-//		motor.setFuerzaMotor(FuerzaMotor.Normal);
-//		motor.setPresentaExplosiones(false);
-//		motor.setPresentaGolpes(false);
-//		motor.setObservaFuncNormal(false);
-//
-//		Bateria bateria = new Bateria();
-//		bateria.setTieneCarga(true);
-//
-//		TanqueCombustible tanque = new TanqueCombustible();
-//		tanque.setTieneCombustible(true);
-//
-//		Automovil automovil = new Automovil(motor,bateria,tanque);
-//
-//		print(automovil);
-//		
-//		sessionStatefull.insert(automovil);
-//		sessionStatefull.fireAllRules();
-//
-//		Diagnostico diagnostico = automovil.getDiagnostico();
-//		
-//		String valorEsperado = DiagnosticoMotor.ConsultarExperto.toString();
-//		
-//		assertResults(diagnostico, valorEsperado);
-//	}
+	@Test
+	public void accesibilidadOperativaAATest() {
+		print("Caso de prueba 2: Nivel de accesibilidad en sitio AA");
+		
+		SoporteDeTeclado soporteDeTeclado = new SoporteDeTeclado(true,true,80);
+		EventosPorTiempo eventosPorTiempo = new EventosPorTiempo(false, Configurable.permite);
+		ContenidoAutomatico contenidoAutomatico = new ContenidoAutomatico(new Double(3), false, true);
+		Sesion sesion = new Sesion(true, true, true);
+		Interrupciones interrupciones = new Interrupciones(true);
+		ContenidoConFlashes contenidoConFlashes = new ContenidoConFlashes(2, NivelDeIntensidad.porDebajoDeLosLimites);
+		ModalidadDeEntrada modalidadDeEntrada = new ModalidadDeEntrada(true, 60);
+		Navegacion navegacion = new Navegacion(true, true, true, true, Localizacion.breadcrumb);
+		PaginaWeb paginaWeb = new PaginaWeb(soporteDeTeclado, eventosPorTiempo, contenidoAutomatico, sesion, interrupciones, contenidoConFlashes, modalidadDeEntrada, navegacion);
+		
+		print(paginaWeb);
+		
+		sessionStatefull.insert(paginaWeb);
+		sessionStatefull.fireAllRules();
+		sessionStatefull.dispose();
+		
+		DiagnosticoDeAccesibilidadOperativa diagnostico = paginaWeb.getDiagnosticoDeAccesibilidadOperativa();
+		assertResults(diagnostico, "AA");
+	}
+	
+	@Test
+	public void accesibilidadOperativaATest() {
+		print("Caso de prueba 3: Nivel de accesibilidad en sitio A");
+		
+		SoporteDeTeclado soporteDeTeclado = new SoporteDeTeclado(true,true,80);
+		EventosPorTiempo eventosPorTiempo = new EventosPorTiempo(true, Configurable.noPermite);
+		ContenidoAutomatico contenidoAutomatico = new ContenidoAutomatico(new Double(3), false, true);
+		Sesion sesion = new Sesion(true, true, true);
+		Interrupciones interrupciones = new Interrupciones(true);
+		ContenidoConFlashes contenidoConFlashes = new ContenidoConFlashes(2, NivelDeIntensidad.porDebajoDeLosLimites);
+		ModalidadDeEntrada modalidadDeEntrada = new ModalidadDeEntrada(true, 60);
+		Navegacion navegacion = new Navegacion(true, true, true, false, Localizacion.breadcrumb);
+		PaginaWeb paginaWeb = new PaginaWeb(soporteDeTeclado, eventosPorTiempo, contenidoAutomatico, sesion, interrupciones, contenidoConFlashes, modalidadDeEntrada, navegacion);
+		
+		print(paginaWeb);
+		
+		sessionStatefull.insert(paginaWeb);
+		sessionStatefull.fireAllRules();
+		sessionStatefull.dispose();
+		
+		DiagnosticoDeAccesibilidadOperativa diagnostico = paginaWeb.getDiagnosticoDeAccesibilidadOperativa();
+		assertResults(diagnostico, "A");
+	}
+	
+	@Test
+	public void accesibilidadOperativaNoCumpleTest() {
+		print("Caso de prueba 4: Sitio no alcanza nivel de accesibilidad minimo");
+		
+		SoporteDeTeclado soporteDeTeclado = new SoporteDeTeclado(false,false,30);
+		EventosPorTiempo eventosPorTiempo = new EventosPorTiempo(false, Configurable.noPermite);
+		ContenidoAutomatico contenidoAutomatico = new ContenidoAutomatico(new Double(3), false, true);
+		Sesion sesion = new Sesion(true, true, true);
+		Interrupciones interrupciones = new Interrupciones(true);
+		ContenidoConFlashes contenidoConFlashes = new ContenidoConFlashes(6, NivelDeIntensidad.porEncimaDeLosLimites);
+		ModalidadDeEntrada modalidadDeEntrada = new ModalidadDeEntrada(true, 60);
+		Navegacion navegacion = new Navegacion(false, true, false, false, Localizacion.breadcrumb);
+		PaginaWeb paginaWeb = new PaginaWeb(soporteDeTeclado, eventosPorTiempo, contenidoAutomatico, sesion, interrupciones, contenidoConFlashes, modalidadDeEntrada, navegacion);
+		
+		print(paginaWeb);
+		
+		sessionStatefull.insert(paginaWeb);
+		sessionStatefull.fireAllRules();
+		sessionStatefull.dispose();
+		
+		DiagnosticoDeAccesibilidadOperativa diagnostico = paginaWeb.getDiagnosticoDeAccesibilidadOperativa();
+		assertResults(diagnostico, "NO CUMPLE");
+	}
+	
+	@Test
+	public void accesibilidadOperativaATest2() {
+		print("Caso de prueba 5: Nivel de accesibilidad en sitio (A Variante flashes)");
+		
+		SoporteDeTeclado soporteDeTeclado = new SoporteDeTeclado(true,true,90);
+		EventosPorTiempo eventosPorTiempo = new EventosPorTiempo(true, Configurable.noPermite);
+		ContenidoAutomatico contenidoAutomatico = new ContenidoAutomatico(new Double(3), true, true);
+		Sesion sesion = new Sesion(true, true, true);
+		Interrupciones interrupciones = new Interrupciones(true);
+		ContenidoConFlashes contenidoConFlashes = new ContenidoConFlashes(1, NivelDeIntensidad.porEncimaDeLosLimites);
+		ModalidadDeEntrada modalidadDeEntrada = new ModalidadDeEntrada(true, 60);
+		Navegacion navegacion = new Navegacion(true, true, true, false, Localizacion.siteMap);
+		PaginaWeb paginaWeb = new PaginaWeb(soporteDeTeclado, eventosPorTiempo, contenidoAutomatico, sesion, interrupciones, contenidoConFlashes, modalidadDeEntrada, navegacion);
+		
+		print(paginaWeb);
+		
+		sessionStatefull.insert(paginaWeb);
+		sessionStatefull.fireAllRules();
+		sessionStatefull.dispose();
+		
+		DiagnosticoDeAccesibilidadOperativa diagnostico = paginaWeb.getDiagnosticoDeAccesibilidadOperativa();
+		assertResults(diagnostico, "A");
+	}
 	
 
 	private RuleRuntimeEventListener buildEventListener() {

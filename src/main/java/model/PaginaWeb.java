@@ -112,18 +112,6 @@ public class PaginaWeb {
 		this.diagnosticoDeAccesibilidadOperativa.setDiagnosticoFinal(diag);
 	}
 	
-//	public boolean cumplePautasNivelA() {
-//		return this.diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.cumple);
-//	}
-//	
-//	public boolean cumplePautasNivelAA() {
-//		return this.diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.cumple);
-//	}
-//	
-//	public boolean cumplePautasNivelAAA() {
-//		return this.diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.cumple);
-//	}
-	
 	public boolean isContenidoAutomaticoAccesible() {
 		return this.diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoAutomatico.isa(Accesibilidad.accesible);
 	}
