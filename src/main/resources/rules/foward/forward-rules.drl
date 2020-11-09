@@ -148,14 +148,16 @@ rule "R11 Cumple pautas nivel A"
 			soporteDeTeclado.coberturaDeNavegacion >= 0 && soporteDeTeclado.coberturaDeNavegacion <=100,
 			soporteDeTeclado.shortcuts == true,
 			soporteDeTeclado.mecanismoAntiTrampa == true,		
-			diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoAutomatico.isa(Accesibilidad.accesible),
-			diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoConFlashes.isa(Accesibilidad.accesible),
-			diagnosticoDeAccesibilidadOperativa.diagnosticoEventosPorTiempo.isa(Accesibilidad.accesible),
 			modalidadDeEntrada.unicoPuntero == true,
 			navegacion.titulos == true,
 			navegacion.botonesEnlaces == true,
 			navegacion.etiquetasDescriptivas == true
         )
+        $diag: DiagnosticoDeAccesibilidadOperativa(
+        	diagnosticoContenidoAutomatico.isa(Accesibilidad.accesible),
+			diagnosticoContenidoConFlashes.isa(Accesibilidad.accesible),
+			diagnosticoEventosPorTiempo.isa(Accesibilidad.accesible)        
+        ) from $paginaWeb.diagnosticoDeAccesibilidadOperativa
     then
     	modify($paginaWeb) {
     		setCumplimientoPautasNivelA(Cumplimiento.cumple)
@@ -200,11 +202,12 @@ end
 rule "R14 Diagnostico final accesibilidad operativa A"
 
     when
-    $paginaWeb: PaginaWeb(
-		diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.cumple),
-		diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.noCumple),
-		diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.noCumple)
-		)
+   		$paginaWeb: PaginaWeb()
+    	$diag: DiagnosticoDeAccesibilidadOperativa(
+        	pautasNivelA.isa(Cumplimiento.cumple),
+			pautasNivelAA.isa(Cumplimiento.noCumple),
+			pautasNivelAAA.isa(Cumplimiento.noCumple)    
+        ) from $paginaWeb.diagnosticoDeAccesibilidadOperativa
     then
     	modify($paginaWeb) {
     		setDiagnosticoFinal("A")
@@ -214,11 +217,12 @@ end
 rule "R15 Diagnostico final accesibilidad operativa AA"
 
     when
-    	$paginaWeb: PaginaWeb(
-			diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.cumple),
-			diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.cumple),
-			diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.noCumple)
-        )
+    	$paginaWeb: PaginaWeb()
+    	$diag: DiagnosticoDeAccesibilidadOperativa(
+        	pautasNivelA.isa(Cumplimiento.cumple),
+			pautasNivelAA.isa(Cumplimiento.cumple),
+			pautasNivelAAA.isa(Cumplimiento.noCumple)    
+        ) from $paginaWeb.diagnosticoDeAccesibilidadOperativa
     then
     	modify($paginaWeb) {
     		setDiagnosticoFinal("AA")
@@ -228,11 +232,12 @@ end
 rule "R16 Diagnostico final accesibilidad operativa AAA"
 
     when
-    	$paginaWeb: PaginaWeb(
-			diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.cumple),
-			diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.cumple),
-			diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.cumple)
-        )
+    	$paginaWeb: PaginaWeb()
+    	$diag: DiagnosticoDeAccesibilidadOperativa(
+        	pautasNivelA.isa(Cumplimiento.cumple),
+			pautasNivelAA.isa(Cumplimiento.cumple),
+			pautasNivelAAA.isa(Cumplimiento.cumple)    
+        ) from $paginaWeb.diagnosticoDeAccesibilidadOperativa
     then
     	modify($paginaWeb) {
     		setDiagnosticoFinal("AAA")
@@ -243,11 +248,12 @@ end
 rule "R17 Diagnostico final accesibilidad operativa No Cumple"
 
     when
-    	$paginaWeb: PaginaWeb(
-			diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.noCumple),
-			diagnosticoDeAccesibilidadOperativa.pautasNivelAA.isa(Cumplimiento.noCumple),
-			diagnosticoDeAccesibilidadOperativa.pautasNivelAAA.isa(Cumplimiento.noCumple)
-        )
+    	$paginaWeb: PaginaWeb()
+    	$diag: DiagnosticoDeAccesibilidadOperativa(
+        	pautasNivelA.isa(Cumplimiento.noCumple),
+			pautasNivelAA.isa(Cumplimiento.noCumple),
+			pautasNivelAAA.isa(Cumplimiento.noCumple)    
+        ) from $paginaWeb.diagnosticoDeAccesibilidadOperativa
     then
     	modify($paginaWeb) {
     		setDiagnosticoFinal("NO CUMPLE")
