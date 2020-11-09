@@ -14,7 +14,7 @@ import model.DiagnosticoDeAccesibilidadOperativa;
 //declare any global variables here
 
 rule "R01 Diagnostico Contenido Automatico Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			contenidoAutomatico.duracion > 5,
@@ -27,7 +27,7 @@ rule "R01 Diagnostico Contenido Automatico Accesible"
 end
 
 rule "R02 Diagnostico Contenido Automatico Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			contenidoAutomatico.duracion < 5
@@ -39,7 +39,7 @@ rule "R02 Diagnostico Contenido Automatico Accesible"
 end
 
 rule "R03 Diagnostico Contenido Automatico NO Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			contenidoAutomatico.duracion > 5,
@@ -52,7 +52,7 @@ rule "R03 Diagnostico Contenido Automatico NO Accesible"
 end
 
 rule "R04 Diagnostico Contenido Con Flashes Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			contenidoConFlashes.cantidadDeFlashes < 3
@@ -64,7 +64,7 @@ rule "R04 Diagnostico Contenido Con Flashes Accesible"
 end
 
 rule "R05 Diagnostico Contenido Con Flashes Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			contenidoConFlashes.cantidadDeFlashes > 3,
@@ -77,7 +77,7 @@ rule "R05 Diagnostico Contenido Con Flashes Accesible"
 end
 
 rule "R06 Diagnostico Contenido Con Flashes NO Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			contenidoConFlashes.cantidadDeFlashes > 3,
@@ -90,7 +90,7 @@ rule "R06 Diagnostico Contenido Con Flashes NO Accesible"
 end
 
 rule "R07 Diagnostico Eventos por tiempo Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			eventosPorTiempo.botonApagado == true,
@@ -103,7 +103,7 @@ rule "R07 Diagnostico Eventos por tiempo Accesible"
 end
 
 rule "R08 Diagnostico Eventos por tiempo Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			eventosPorTiempo.botonApagado == false,
@@ -116,7 +116,7 @@ rule "R08 Diagnostico Eventos por tiempo Accesible"
 end
 
 rule "R09 Diagnostico Eventos por tiempo Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			eventosPorTiempo.botonApagado == true,
@@ -129,7 +129,7 @@ rule "R09 Diagnostico Eventos por tiempo Accesible"
 end
 
 rule "R10 Diagnostico Eventos por tiempo NO Accesible"
-
+	salience 20
     when
     	$paginaWeb: PaginaWeb(
 			eventosPorTiempo.botonApagado == false,
@@ -142,15 +142,15 @@ rule "R10 Diagnostico Eventos por tiempo NO Accesible"
 end
 
 rule "R11 Cumple pautas nivel A"
-
+	salience 10
     when
     	$paginaWeb: PaginaWeb(
 			soporteDeTeclado.coberturaDeNavegacion >= 0 && soporteDeTeclado.coberturaDeNavegacion <=100,
 			soporteDeTeclado.shortcuts == true,
 			soporteDeTeclado.mecanismoAntiTrampa == true,		
-			//diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoAutomatico.isa(Accesibilidad.accesible),
-			//diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoConFlashes.isa(Accesibilidad.accesible),
-			//diagnosticoDeAccesibilidadOperativa.diagnosticoEventosPorTiempo.isa(Accesibilidad.accesible),
+			diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoAutomatico.isa(Accesibilidad.accesible),
+			diagnosticoDeAccesibilidadOperativa.diagnosticoContenidoConFlashes.isa(Accesibilidad.accesible),
+			diagnosticoDeAccesibilidadOperativa.diagnosticoEventosPorTiempo.isa(Accesibilidad.accesible),
 			modalidadDeEntrada.unicoPuntero == true,
 			navegacion.titulos == true,
 			navegacion.botonesEnlaces == true,
@@ -164,7 +164,7 @@ rule "R11 Cumple pautas nivel A"
 end
 
 rule "R12 Cumple pautas nivel AA"
-
+	salience 10
     when
     	$paginaWeb: PaginaWeb(
 			navegacion.indicadorDeFoco == true,
@@ -179,7 +179,7 @@ rule "R12 Cumple pautas nivel AA"
 end
 
 rule "R13 Cumple pautas nivel AAA"
-
+	salience 10
     when
     	$paginaWeb: PaginaWeb(
 			soporteDeTeclado.coberturaDeNavegacion == 100,
@@ -198,7 +198,7 @@ rule "R13 Cumple pautas nivel AAA"
 end
 
 rule "R14 Diagnostico final accesibilidad operativa A"
-	salience 30
+
     when
     $paginaWeb: PaginaWeb(
 		diagnosticoDeAccesibilidadOperativa.pautasNivelA.isa(Cumplimiento.cumple),

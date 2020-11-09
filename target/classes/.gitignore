@@ -1,8 +1,2 @@
-/META-INF/
-/dtables/
-/foward/
-/logback-test.xml
-/model/
-/reasoner/
 /rules/
-/utils/
+/foward/

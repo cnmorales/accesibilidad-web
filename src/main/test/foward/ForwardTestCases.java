@@ -73,7 +73,6 @@ public class ForwardTestCases {
 	public void accesibilidadOperativaAAATest() {
 		print("Caso de prueba: Nivel de accesibilidad en sitio AAA");
 		
-		
 		SoporteDeTeclado soporteDeTeclado = new SoporteDeTeclado(true,true,100);
 		EventosPorTiempo eventosPorTiempo = new EventosPorTiempo(false, Configurable.permite);
 		ContenidoAutomatico contenidoAutomatico = new ContenidoAutomatico(new Double(10), true, true);
@@ -90,6 +89,7 @@ public class ForwardTestCases {
 		//FactHandle paginaWebDir = sessionStatefull.insert(paginaWeb);
 		sessionStatefull.insert(paginaWeb);
 		sessionStatefull.fireAllRules();
+		sessionStatefull.dispose();
 		//paginaWeb = (PaginaWeb) sessionStatefull.getObject(paginaWebDir);
 		
 		DiagnosticoDeAccesibilidadOperativa diagnostico = paginaWeb.getDiagnosticoDeAccesibilidadOperativa();
